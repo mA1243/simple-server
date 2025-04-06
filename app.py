@@ -1,9 +1,12 @@
 from flask import Flask, request, render_template, jsonify
+from flask_cors import CORS
 import requests
 from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
+
+CORS(app)
 
 load_dotenv()
 
@@ -48,3 +51,6 @@ def get_weather():
         return jsonify(current_weather)
     except:
         return "City Not Found"
+
+if __name__ == "__main__":
+    app.run(debug=True)
