@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <style>
+        .loader {
+            border: 1vw solid #f3f3f3; /* Light grey */
+            border-top: 1vw solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 1vw;
+            height: 1vw;
+            animation: spin 2s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Basic Weather</h1>
+    <p>Get Temperature for a City</p>
+
+    <form onsubmit="fetch_weather(event)">
+        <label for="city">City</label>
+        <input type="text" name="city" id="city" placeholder="Enter City" required>
+        <button type="submit" value="Get Weather">Get Temp</button>
+    </form>
+
+    <div id="loader" class="loader"></div>
+
+    <p id="data"></p>
+
+</body>
+
+</html>
+
+<script>
+    function fetch_weather(event) {
+        event.preventDefault();
+        
+        document.getElementById("loader").style.display = "block";
+        document.getElementById("data").innerHTML = "";
+        
+        var city = document.getElementById("city").value;
+        fetch("https://hello-world-8qw7.onrender.com/getWeather?city=" + city) 
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                document.getElementById("data").innerHTML = "Temperature: " + data.temperature.value + "°C";
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                document.getElementById("data").innerHTML = "City Not Found";
+            })
+            .finally(() => {
+                document.getElementById("loader").style.display = "none";
+            });
+    }
+</script>
