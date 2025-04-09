@@ -18,7 +18,7 @@ function fetchWeather(event) {
     document.getElementById("loader").style.display = "block";
     
 
-    fetch("http://127.0.0.1:5000/api/v1/weather?city=" + city + "&unit=" + unit) 
+    fetch("https://hello-world-8qw7.onrender.com//api/v1/weather?city=" + city + "&unit=" + unit) 
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
