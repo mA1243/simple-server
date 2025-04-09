@@ -8,3 +8,8 @@ A simple Flask-based API to fetch weather data for a given city using the OpenWe
 - Fetch current weather data for any city.
 - Supports temperature units: Metric (Celsius) and Imperial (Fahrenheit).
 - Handles errors gracefully with meaningful JSON responses.
+
+---
+
+## **Example Site**
+- https://simpleweather1111.netlify.app/
