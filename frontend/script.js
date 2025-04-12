@@ -13,6 +13,7 @@ function fetchWeather(event) {
     document.getElementById("cur_temp").innerHTML = "";
     document.getElementById("like_temp").innerHTML = "";
     document.getElementById("mm_temp").innerHTML = "";
+    document.getElementById("ai_summary").innerHTML = ""
     document.getElementById("icon").style.display = "none";
 
     document.getElementById("loader").style.display = "block";
@@ -33,6 +34,7 @@ function fetchWeather(event) {
             document.getElementById("cur_temp").innerHTML = "Current temperature: " + values.current_temp + unitval;
             document.getElementById("like_temp").innerHTML = "Feels Like: " + values.feels_like + unitval;
             document.getElementById("mm_temp").innerHTML = "Max: " + values.max_temp + unitval + ", Min: " + values.min_temp + unitval
+            document.getElementById("ai_summary").innerHTML = values.ai_summary
             document.querySelector("img").src = values.icon;
             
             const weatherIcon = document.querySelector("img");

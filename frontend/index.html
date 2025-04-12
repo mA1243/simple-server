@@ -17,7 +17,7 @@
   <div class="container">
     <form class="text-center" onsubmit="fetchWeather(event)">
       <div class="form-group">
-        <input type="text" class="form-control w-50 mx-auto" id="city" placeholder="Enter city name" value="Lagos" required>
+        <input type="text" class="form-control w-50 mx-auto" id="city" placeholder="Enter city name" required>
       </div>
       <div class="form-group" id="radio-group">
         <div class="form-check form-check-inline">
@@ -36,7 +36,7 @@
     <div></div><div></div><div></div><div></div><div></div><div></div>
     <div></div><div></div><div></div><div></div><div></div><div></div>
   </div>
-  <div class="container" id="weather_container">
+  <div class="container mb-5" id="weather_container">
     <div class="card mx-auto mt-2" style="max-width: 400px;">
       <div class="card-body text-center">
         <h5 class="card-title" id="location">City, AU</h5>
@@ -45,6 +45,11 @@
         <div class="card-text" id="icon"><img src="" alt="Weather-icon"></div>
         <p class="card-text" id="mm_temp">Max: 18.39 °C, Min: 16.38 °C</p>
       </div>
+
+          <div class="card-body text-center">
+            <h5 class="card-title">AI-Generated Summary</h5>
+            <p class="card-text" id="ai_summary"></p>
+          </div>
     </div>
   </div>
   <script src="./script.js"></script>

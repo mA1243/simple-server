@@ -1,21 +1,19 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
-from dotenv import load_dotenv
 import os
+from gemini_weather import generate_weather_response
 
 app = Flask(__name__)
 
 CORS(app)
 
-load_dotenv()
-
-API_KEY = os.getenv("API_KEY")
+OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
 def get_location(city):
     """Fetch latitude and longitude for a given city."""
     try:
-        response = requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={city}&appid={API_KEY}")
+        response = requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={city}&appid={OPENWEATHER_API_KEY}")
         response.raise_for_status()
         data = response.json()
         if not data:
@@ -32,7 +30,7 @@ def get_location(city):
 def get_weather_data(lat, lon, unit):
     """Fetch weather data for given coordinates."""
     try:
-        response = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API_KEY}&units={unit}")
+        response = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={OPENWEATHER_API_KEY}&units={unit}")
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -68,6 +66,8 @@ def get_weather():
         weather_icon_data = weather_data["weather"][0]["icon"]
         weather_icon = f"https://openweathermap.org/img/wn/{weather_icon_data}@2x.png"
         
+        ai_summary = generate_weather_response(weather_data)
+        
         current_weather = {
             "temperature": {
                 "current_temp": current_temp,
@@ -77,7 +77,8 @@ def get_weather():
                 "icon": weather_icon,
                 "unit": unit,
                 "city": city_data,
-                "country": country_data
+                "country": country_data,
+                "ai_summary": ai_summary
             }
         }
         return jsonify(current_weather)
@@ -94,4 +95,4 @@ def not_found_error(error):
     return jsonify({"error": "Resource not found"}), 404
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
